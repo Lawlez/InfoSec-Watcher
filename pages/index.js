@@ -44,6 +44,10 @@ const Map = styled.div`
 `;
 
 const Stroke = styled.svg`
+  height: 666px;
+  width: 999px;
+  position: absolute;
+
   path {
     stroke-dasharray: ${({ length }) => +length + "px"};
     stroke-dashoffset: ${({ length }) => +length + "px"};
@@ -69,6 +73,10 @@ export default function Home() {
     var length = path.getTotalLength();
     console.log(length);
     setLength(length);
+
+    // bcenter of origin
+    const originC = document.getElementById("us").getBBox();
+    console.log(originC);
   });
 
   return (
@@ -87,7 +95,7 @@ export default function Home() {
         >
           <path
             id="strokepath"
-            d="M 10 80 Q 95 10 180 80"
+            d="M 632 388 Q 95 10 79.174748 187.7204"
             stroke="black"
             strokeWidth="2"
             fill="transparent"
