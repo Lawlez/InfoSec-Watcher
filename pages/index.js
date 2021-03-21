@@ -47,6 +47,7 @@ const Stroke = styled.svg`
   height: 666px;
   width: 999px;
   position: absolute;
+  pointer-events: none;
 
   path {
     stroke-dasharray: ${({ length }) => +length + "px"};
@@ -66,7 +67,11 @@ const Stroke = styled.svg`
 `;
 
 export default function Home() {
+  console.count("rerenders Page ");
   const [length, setLength] = useState(0);
+  const [origin, setOrigin] = useState({});
+  const [origin2, setOrigin2] = useState({});
+  const [destination, setDestination] = useState({});
 
   useEffect(() => {
     var path = document.getElementById("strokepath");
@@ -75,8 +80,24 @@ export default function Home() {
     setLength(length);
 
     // bcenter of origin
-    const originC = document.getElementById("us").getBBox();
-    console.log(originC);
+    const originC = document.getElementById("br").getBBox();
+    const xCenter = originC.x + originC.width * 0.5;
+    const yCenter = originC.y + originC.height * 0.5;
+    console.log(yCenter, xCenter);
+    setOrigin({ x: xCenter, y: yCenter });
+
+    const originC2 = document.getElementById("us").getBBox();
+    const xCenter2 = originC2.x + originC2.width * 0.5;
+    const yCenter2 = originC2.y + originC2.height * 0.5;
+    console.log(yCenter2, xCenter2);
+    setOrigin2({ x: xCenter2, y: yCenter2 });
+
+    // bcenter of dest
+    const destC = document.getElementById("ch").getBBox();
+    const dxCenter = destC.x + destC.width * 0.5;
+    const dyCenter = destC.y + destC.height * 0.5;
+    console.log(dyCenter, dxCenter);
+    setDestination({ x: dxCenter, y: dyCenter });
   });
 
   return (
@@ -89,13 +110,14 @@ export default function Home() {
       <main className={styles.main}>
         <Stroke
           length={length}
+          origin={origin}
           width="190"
           height="160"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
             id="strokepath"
-            d="M 632 388 Q 95 10 79.174748 187.7204"
+            d={`M ${origin.x} ${origin.y} Q 15 100 ${destination.x} ${destination.y}`}
             stroke="black"
             strokeWidth="2"
             fill="transparent"
