@@ -32,7 +32,7 @@ const Map = styled.div`
 
       // When a layer is 'selected' (via currentLayers prop).
       &[aria-current="true"] {
-        fill: rgba(200, 43, 43, 0.83);
+        fill: rgba(30, 230, 43, 0.83);
       }
 
       // You can also highlight a specific layer via it's id
@@ -70,7 +70,6 @@ export default function Home() {
   console.count("rerenders Page ");
   const [length, setLength] = useState(0);
   const [origin, setOrigin] = useState({});
-  const [origin2, setOrigin2] = useState({});
   const [destination, setDestination] = useState({});
 
   useEffect(() => {
@@ -80,17 +79,12 @@ export default function Home() {
     setLength(length);
 
     // bcenter of origin
-    const originC = document.getElementById("br").getBBox();
-    const xCenter = originC.x + originC.width * 0.5;
-    const yCenter = originC.y + originC.height * 0.5;
-    console.log(yCenter, xCenter);
+    const originC = document.getElementById("de").getBBox();
+    console.log(originC);
+    const xCenter = originC.x + originC.width / 2;
+    const yCenter = originC.y + originC.height / 2;
+    console.log("srilank:" + yCenter, xCenter);
     setOrigin({ x: xCenter, y: yCenter });
-
-    const originC2 = document.getElementById("us").getBBox();
-    const xCenter2 = originC2.x + originC2.width * 0.5;
-    const yCenter2 = originC2.y + originC2.height * 0.5;
-    console.log(yCenter2, xCenter2);
-    setOrigin2({ x: xCenter2, y: yCenter2 });
 
     // bcenter of dest
     const destC = document.getElementById("ch").getBBox();
@@ -98,7 +92,7 @@ export default function Home() {
     const dyCenter = destC.y + destC.height * 0.5;
     console.log(dyCenter, dxCenter);
     setDestination({ x: dxCenter, y: dyCenter });
-  });
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -117,14 +111,18 @@ export default function Home() {
         >
           <path
             id="strokepath"
-            d={`M ${origin.x} ${origin.y} Q 15 100 ${destination.x} ${destination.y}`}
+            d={`M ${origin.x} ${origin.y} Q 5 25 ${destination.x} ${destination.y}`}
             stroke="black"
             strokeWidth="2"
             fill="transparent"
           />
         </Stroke>
         <Map>
-          <VectorMap {...world} className={styles.map} currentLayers={["ch"]} />
+          <VectorMap
+            {...world}
+            className={styles.map}
+            currentLayers={["ch", "lk"]}
+          />
         </Map>
       </main>
 
